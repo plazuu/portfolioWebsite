@@ -23,7 +23,7 @@ const scene = new THREE.Scene();
 //test cube 
 
 const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
+    new THREE.PlaneGeometry(100, 100),
     new THREE.MeshBasicMaterial({ color: 'white'})
 );
 plane.rotation.x = - Math.PI * 0.5;
@@ -71,12 +71,29 @@ window.addEventListener('resize', () => {
 })
 
 //camera
-const camera = new THREE.PerspectiveCamera(75, sizes.aspectRatio, 0.1, 100);
-camera.position.set(2,2,2);
-scene.add(camera);
+const cameraGroup = new THREE.Group();
+scene.add(cameraGroup);
 
-const controls = new OrbitControls(camera, canvas);
-controls.target.set(0, 0.75, 0);
+const camera = new THREE.PerspectiveCamera(35, sizes.aspectRatio, 0.1, 100);
+camera.position.z = 6;
+cameraGroup.add(camera);
+
+// const controls = new OrbitControls(camera, canvas);
+// controls.target.set(0, 0.75, 0);
+
+//this is for wayyy later when everythign is set up 
+//basically slow and suddel cam movement
+const cursor = {}
+cursor.x = 0;
+cursor.y = 0;
+
+window.addEventListener('mousemove', (event)=>{
+    cursor.x = event.clientX / sizes.width - 0.5;
+    cursor.y = event.clientY / sizes.height - 0.5;
+    console.log(cursor);
+})
+
+
 
 //clock
 const clock = new THREE.Clock();
@@ -86,11 +103,18 @@ let previousTime = 0;
 const tick = () =>{
 
     const elapsedTime = clock.getElapsedTime();
-    const deltaTime = previousTime - elapsedTime;
+    const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
 
+    console.log(deltaTime)
+    const parallaxX = cursor.x;
+    const parallaxY = - cursor.y;
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 3 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 3 * deltaTime
+
+
     
-    controls.update();
+    // controls.update();
     renderer.render(scene, camera);
    
     window.requestAnimationFrame(tick);
