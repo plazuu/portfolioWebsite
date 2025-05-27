@@ -14,7 +14,6 @@ export default class Camera{
 
         this.setInstance();
         this.setOrbitControls();
-        console.log(this.controls);
     }
 
     setInstance(){
