@@ -11,9 +11,10 @@ export default class Renderer{
         this.scene = this.experience.scene;
         this.camera = this.experience.camera;
 
-        this.instance = new THREE.WebGLRenderer({canvas: this.experience.canvas});
-        this.setInstance();
+        this.instance = new THREE.WebGLRenderer({
+            canvas: this.experience.canvas});
 
+        this.setInstance();
     }
 
     setInstance(){

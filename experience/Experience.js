@@ -41,7 +41,6 @@ export default class Experience {
 
     }
 
-
     tick(){
         this.updateTime();
         this.update();
@@ -67,9 +66,6 @@ export default class Experience {
         this.time.delta = currentTime - this.time.current;
         this.time.current = currentTime;
         this.time.elapsed = currentTime - this.time.start;
-
     }
-
-
 
 }
