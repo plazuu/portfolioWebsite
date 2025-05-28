@@ -16,7 +16,6 @@ export default class Experience {
 
         }
 
-        console.log(sources);
         Experience.instance = this;
 
         this.canvas = canvas;
@@ -55,14 +54,9 @@ export default class Experience {
     };
 
     sceneAdd(items){
-        console.log(items[0]);
-        console.log(items.mainScene.path);
         for(const item in items){
-            console.log(item);
-            console.log('t');
-            this.scene.add();
+            this.scene.add(items[item].scene);
         }
-
     }
 
     resize(){

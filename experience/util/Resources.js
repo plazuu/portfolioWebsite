@@ -11,7 +11,7 @@ export default class Resources{
 
         this.experience = new Experience();
 
-        this.items = [];
+        this.items = {};
         this.toLoad = this.sources.length;
         this.loaded = 0;
 
