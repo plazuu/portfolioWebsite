@@ -3,6 +3,8 @@ import Sizes from './util/Sizes';
 import Camera from './Camera';
 import Renderer from './Renderer';
 import World from './world/world';
+import Resources from './util/Resources';
+import sources from './Sources';
 
 export default class Experience {
     static instance = null;
@@ -14,11 +16,13 @@ export default class Experience {
 
         }
 
+        console.log(sources);
         Experience.instance = this;
 
         this.canvas = canvas;
         this.scene = new THREE.Scene();
         this.sizes = new Sizes();
+        this.resouces = new Resources(sources);
         this.camera = new Camera();
         this.renderer = new Renderer()
         this.world = new World();
@@ -49,6 +53,17 @@ export default class Experience {
             this.tick();
         });
     };
+
+    sceneAdd(items){
+        console.log(items[0]);
+        console.log(items.mainScene.path);
+        for(const item in items){
+            console.log(item);
+            console.log('t');
+            this.scene.add();
+        }
+
+    }
 
     resize(){
         this.sizes.resize();

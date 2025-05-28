@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import Experience from '../Experience';
 
 export default class Resources{
 
     constructor(sources){
 
-        this.items = {};
+
+        this.sources = sources;
+
+        this.experience = new Experience();
+
+        this.items = [];
         this.toLoad = this.sources.length;
         this.loaded = 0;
 
@@ -22,29 +28,33 @@ export default class Resources{
 
     startLoading(){
         
-        for(const source of sources){
+        for(const source of this.sources){
 
             if(source.type === 'gltfModel'){
                 this.loaders.gltfLoader.load(source.path, (file) => {
-                    console.log("do something");
+                    this.sourceLoaded(source, file);
                 });
             }
             if(source.type === 'cubetexture'){
                 this.loaders.gltfLoader.load(source.path, (file) => {
-                    console.log("do something");
+                    this.sourceLoaded(source, file);
                 });
             }
             if(source.type === 'texture'){
                 this.loaders.gltfLoader.load(source.path, (file) => {
-                    console.log("do something");
+                    this.sourceLoaded(source, file);
                 });
             }
         }
+    
     }
-    sourceLoaded(source,file){
-        this.item[source.name] = file;
+    sourceLoaded(source, file){
+        this.items[source.name] = file;
 
-        this.loaded++;//
-        //need an event listener or somthing idk haven gone too deep into it
+        this.loaded++;
+
+        if(this.loaded === this.toLoad){
+            this.experience.sceneAdd(this.items);
+        }
     }
 }
